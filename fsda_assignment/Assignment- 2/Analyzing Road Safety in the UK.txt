@@ -1,0 +1,176 @@
+ --------------------------------------Analyzing Road Safety in the UK------------------------------------
+
+CREATE DATABASE ASSIGN__2;
+USE ASSIGN__2;
+   
+CREATE or replace TABLE accident(
+Accident_Index varchar(25),
+Location_Easting_OSGR INT,
+Location_Northing_OSGR INT,
+Longitude DECIMAL(7,7),
+Latitude DECIMAL(7,7),
+Police_Force INT,
+Accident_Severity INT,
+Number_of_Vehicles INT,
+Number_of_Casualties INT,
+"Date" DATE,
+Day_of_Week INT,
+Time DATETIME,
+Local_Authority_District INT,
+Local_Authority_(Highway) VARCHAR(25),
+"1st_Road_Clas" INT,
+Speed_limit INT,
+Junction_Detail INT,
+Junction_Control INT,
+"2nd_Road_Class" INT,
+"2nd_Road_Number" INT,
+Pedestrian_Crossing-Human_Control INT,
+Pedestrian_Crossing-Physical_Facilities INT,
+Light_Conditions INT,
+Weather_Conditions INT,
+Road_Surface_Conditions INT,
+Special_Conditions_at_Site INT,
+Carriageway_Hazards INT,
+Urban_or_Rural_Area INT,
+Did_Police_Officer_Attend_Scene_of_Accident INT,
+LSOA_of_Accident_Location VARCHAR(25));
+  
+  
+ CREATE OR REPLACE TABLE accident(
+Accident_Index varchar(25),
+Location_Easting_OSGR INT,
+Location_Northing_OSGR INT,
+Longitude DECIMAL(7,6),
+Latitude DECIMAL(8,6),
+Police_Force INT,
+Accident_Severity INT,
+Number_of_Vehicles INT,
+Number_of_Casualties INT,
+Date VARCHAR(15),
+Day_of_Week INT,
+Time VARCHAR(10),
+Local_Authority_District INT,
+Local_Authority_Highway VARCHAR(25),
+FIRST_Road_Class INT,
+first_Road_number INT,
+Road_Type INT, 
+Speed_limit INT,
+Junction_Detail INT,
+Junction_Control INT,
+SECOND_Road_Class INT,
+SECOND_Road_Number INT,
+ Pedestrian_Crossing_Human_Control INT,
+Pedestrian_Crossing_Physical_Facilities INT,
+Light_Conditions INT,
+Weather_Conditions INT,
+Road_Surface_Conditions INT,
+Special_Conditions_at_Site INT,
+Carriageway_Hazards INT,
+Urban_or_Rural_Area INT,
+Did_Police_Officer_Attend_Scene_of_Accident INT,
+LSOA_of_Accident_Location VARCHAR(25));
+  
+  
+  
+
+CREATE or replace TABLE vehicles(
+	accident_index VARCHAR(13),
+    vehicle_type VARCHAR(50)
+);
+
+
+CREATE or replace TABLE vehicals_types(
+        vehicle_code int,
+        vehicle_type varchar(90));
+        
+        
+select * from accident;    
+select * from vehicals_types;    
+select * from vehicles;   
+
+
+
+------------------------------------*/1... the median severity value of accidents caused by various Motorcycles. */------------------------------------
+
+SELECT VT.VEHICLE_TYPE AS "VEHICLE TYPES",
+MEDIAN(ACCIDENT_SEVERITY) AS "Median SEVERITY", COUNT(VT.VEHICLE_TYPE) AS "NUMBER OF ACCIDENT"
+FROM accident a
+JOIN VEHICLES V ON A.ACCIDENT_INDEX = V.ACCIDENT_INDEX
+JOIN VEHICALS_TYPES VT ON V.VEHICLE_TYPE = VT.VEHICLE_CODE 
+WHERE VT.VEHICLE_TYPE LIKE '%Motorcycle%' 
+GROUP BY 1
+ORDER BY 2,3;
+ 
+
+
+
+-----------------------------*2... get Accident Severity and Total Accidents per Vehicle Type *-----------------------------------------
+
+SELECT VT.VEHICLE_TYPE AS "VEHICLE TYPES", A.ACCIDENT_SEVERITY AS "SEVERITY", COUNT(VT.VEHICLE_TYPE) AS "NUMBER OF ACCIDENT"
+FROM ACCIDENT A
+JOIN VEHICLES V ON A.ACCIDENT_INDEX = V.ACCIDENT_INDEX
+JOIN VEHICALS_TYPES VT ON V.VEHICLE_TYPE = VT.VEHICLE_CODE 
+GROUP BY 1,2
+ORDER BY 2,3;
+
+
+
+---------------------------*3.... Average Severity by vehicle type *------------------------------------
+
+
+SELECT VT.VEHICLE_TYPE AS "VEHICLE TYPES", AVG(A.ACCIDENT_SEVERITY) AS "AVERAGE SEVERITY"FROM ACCIDENT A
+JOIN VEHICLES V ON A.ACCIDENT_INDEX = V.ACCIDENT_INDEX
+JOIN VEHICALS_TYPES VT ON V.VEHICLE_TYPE = VT.VEHICLE_CODE 
+GROUP BY 1
+ORDER BY 1,2;
+
+
+
+-----------------------------*4..........* Average Severity and Total Accidents by Motorcyle------------    
+
+SELECT VT.VEHICLE_TYPE AS "VEHICLE TYPES", AVG(A.ACCIDENT_SEVERITY) AS "AVERAGE SEVERITY",COUNT(VT.VEHICLE_TYPE) AS "NUMBER OF ACCIDENT"
+FROM ACCIDENT A
+JOIN VEHICLES V ON A.ACCIDENT_INDEX = V.ACCIDENT_INDEX
+JOIN VEHICALS_TYPES VT ON V.VEHICLE_TYPE = VT.VEHICLE_CODE 
+WHERE VT.VEHICLE_TYPE LIKE '%Motorcycle%' 
+GROUP BY 1
+ORDER BY 1,2,3;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+        
+        
+
